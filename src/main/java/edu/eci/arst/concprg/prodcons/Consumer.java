@@ -34,6 +34,7 @@ public class Consumer extends Thread{
 						}
     				}
     				elem=queue.poll();
+					queue.notify();
     			}
     			System.out.println("Consumer consumes "+ elem);
 	        }
