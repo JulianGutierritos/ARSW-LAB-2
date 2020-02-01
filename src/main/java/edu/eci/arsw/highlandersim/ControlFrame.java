@@ -8,6 +8,9 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import edu.eci.arsf.maths.Sumas;
+
 import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
@@ -22,6 +25,7 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.JScrollBar;
 
+@SuppressWarnings("serial")
 public class ControlFrame extends JFrame {
 
     private static final int DEFAULT_IMMORTAL_HEALTH = 100;
@@ -67,34 +71,46 @@ public class ControlFrame extends JFrame {
         contentPane.add(toolBar, BorderLayout.NORTH);
 
         final JButton btnStart = new JButton("Start");
-        btnStart.addActionListener(new ActionListener() {
+        btnStart.addActionListener(new ActionListener(){
+        	@Override
             public void actionPerformed(ActionEvent e) {
 
                 immortals = setupInmortals();
-
-                if (immortals != null) {
-                    for (Immortal im : immortals) {
-                        im.start();
+                synchronized(immortals) {
+                	if (immortals != null) {
+                        for (Immortal im : immortals) {
+                            im.start();
+                        }
                     }
+                	immortals.notifyAll();
+
                 }
-
                 btnStart.setEnabled(false);
-
             }
         });
         toolBar.add(btnStart);
 
         JButton btnPauseAndCheck = new JButton("Pause and check");
         btnPauseAndCheck.addActionListener(new ActionListener() {
+        	@Override
             public void actionPerformed(ActionEvent e) {
             	int sum=0;
             	synchronized(immortals) {
+            		
+            		
+            		/*for(int i=0;i<Integer.parseInt(numOfImmortals.getText());i++) {
+            			
+            		}*/
             		for (Immortal im : immortals) {
             			//synchronized(im) {
             				im.pausar();
-            				sum+=im.getHealth().get();
+//            				sum+=im.getHealth().get();
             			//}
             		}
+            		
+            		Sumas sumas=new Sumas(50,immortals,1000);
+            		sumas.sumaTotal();
+            		sum+=sumas.getSumaTotal();
             		System.out.println("ya por acá");            		
     				immortals.notifyAll();
             	}
@@ -104,15 +120,18 @@ public class ControlFrame extends JFrame {
             }
         });
         toolBar.add(btnPauseAndCheck);
+        
 
         JButton btnResume = new JButton("Resume");
 
         btnResume.addActionListener(new ActionListener() {
+        	@Override
             public void actionPerformed(ActionEvent e) {
-				for (Immortal im : immortals) {
-					im.reaunudar();
-                }
-
+        		synchronized(immortals) {
+        			for (Immortal im : immortals) {
+    					im.reaunudar();
+                    }
+        		}
             }
         });
 
@@ -127,6 +146,18 @@ public class ControlFrame extends JFrame {
         numOfImmortals.setColumns(10);
 
         JButton btnStop = new JButton("STOP");
+        
+        btnStop.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				synchronized(immortals) {
+					for (Immortal im : immortals) {
+						im.pausar();
+	                }
+				}
+			}
+        });
+        
         btnStop.setForeground(Color.RED);
         toolBar.add(btnStop);
 
