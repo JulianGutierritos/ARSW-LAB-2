@@ -92,7 +92,7 @@ public class ControlFrame extends JFrame {
                 }
                 int sum = 0;
                 for (Immortal im : immortals) {
-                    sum += im.getHealth();
+                    sum += im.getHealth().get();
                 }
 
                 statisticsLabel.setText("<html>"+immortals.toString()+"<br>Health sum:"+ sum);
@@ -120,7 +120,7 @@ public class ControlFrame extends JFrame {
         toolBar.add(lblNumOfImmortals);
 
         numOfImmortals = new JTextField();
-        numOfImmortals.setText("3");
+        numOfImmortals.setText("100");
         toolBar.add(numOfImmortals);
         numOfImmortals.setColumns(10);
 

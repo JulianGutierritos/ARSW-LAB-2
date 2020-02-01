@@ -2,12 +2,13 @@ package edu.eci.arsw.highlandersim;
 
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.*;
 
 public class Immortal extends Thread {
 
     private ImmortalUpdateReportCallback updateCallback=null;
     
-    private int health;
+    private AtomicInteger health;
     
     private int defaultDamageValue;
 
@@ -25,7 +26,7 @@ public class Immortal extends Thread {
         this.updateCallback=ucb;
         this.name = name;
         this.immortalsPopulation = immortalsPopulation;
-        this.health = health;
+        this.health = new AtomicInteger(health);
         this.defaultDamageValue=defaultDamageValue;
 		this.pausar = false;
     }
@@ -66,13 +67,9 @@ public class Immortal extends Thread {
 
     public void fight(Immortal i2) {
 
-        if (i2.getHealth() > 0) {
-			synchronized(i2) {
-				synchronized(this) {
-					i2.changeHealth(i2.getHealth() - defaultDamageValue);
-					this.health += defaultDamageValue;
-				}
-			}
+        if (i2.getHealth().get() > 0) {
+			i2.getHealth().addAndGet(-defaultDamageValue);
+			this.health.addAndGet(defaultDamageValue);
 			updateCallback.processReport("Fight: " + this + " vs " + i2+"\n");          
         } else {
             updateCallback.processReport(this + " says:" + i2 + " is already dead!\n");
@@ -81,17 +78,17 @@ public class Immortal extends Thread {
     }
 
     public void changeHealth(int v) {
-        health = v;
+        health.getAndSet(v);
     }
 
-    public int getHealth() {
+    public AtomicInteger getHealth() {
         return health;
     }
 
     @Override
     public String toString() {
 
-        return name + "[" + health + "]";
+        return name + "[" + health.toString() + "]";
     }
 	
 	public void pausar(){
