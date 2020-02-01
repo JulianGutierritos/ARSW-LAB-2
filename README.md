@@ -1,4 +1,4 @@
-# ARSW---LAB-2-P1
+# ARSW LAB-2
 
 ### 2. Review the code and identify how the functionality indicated above was implemented. Given the intention of the game, an invariant should be that the sum of the life points of all players is always the same (of course, in an instant of time in which a time increase / reduction operation is not in process ). For this case, for N players, what should this value be?
 
@@ -20,19 +20,19 @@ Después de los cambios realizados en el punto anterior, si se cumplela invarian
 
 - Cuando se establece quién es el siguiente inmortal con el que se tendrá la pelea.
 
-![]()
+![](https://github.com/JulianGutierritos/ARSW---LAB-2-P1/blob/master/imgs/ars1.png)
 
-- En la pelea cuando se quiere acceder y cambiar la el puntaje de vidas del contrincante.
+- En la pelea cuando se quiere acceder y/o cambiar la el puntaje de vidas del contrincante.
 
-![]()
+![](https://github.com/JulianGutierritos/ARSW---LAB-2-P1/blob/master/imgs/ars2.png)
 
 - Para cada hilo cuando se quiere cambiar el puntaje de vidas.
 
-![]()
+![](https://github.com/JulianGutierritos/ARSW---LAB-2-P1/blob/master/imgs/ars4.png)
 
 - Para cada hilo cuando se quiere acceder al puntaje de vidas.
 
-![]()
+![](https://github.com/JulianGutierritos/ARSW---LAB-2-P1/blob/master/imgs/ars3.png)
 
 ### 7. After implementing your strategy, start running your program, and pay attention to whether it comes to a halt. If so, use the jps and jstack programs to identify why the program stopped.
 
