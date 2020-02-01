@@ -87,18 +87,20 @@ public class ControlFrame extends JFrame {
         JButton btnPauseAndCheck = new JButton("Pause and check");
         btnPauseAndCheck.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-				for (Immortal im : immortals) {
-					im.pausar();
-                }
-                int sum = 0;
-                for (Immortal im : immortals) {
-                    sum += im.getHealth().get();
-                }
-
+            	int sum=0;
+            	synchronized(immortals) {
+            		for (Immortal im : immortals) {
+            			//synchronized(im) {
+            				im.pausar();
+            				sum+=im.getHealth().get();
+            			//}
+            		}
+            		System.out.println("ya por acá");            		
+    				immortals.notifyAll();
+            	}
+				
+				
                 statisticsLabel.setText("<html>"+immortals.toString()+"<br>Health sum:"+ sum);
-                
-                
-
             }
         });
         toolBar.add(btnPauseAndCheck);
@@ -120,7 +122,7 @@ public class ControlFrame extends JFrame {
         toolBar.add(lblNumOfImmortals);
 
         numOfImmortals = new JTextField();
-        numOfImmortals.setText("100");
+        numOfImmortals.setText("1000");
         toolBar.add(numOfImmortals);
         numOfImmortals.setColumns(10);
 

@@ -95,11 +95,9 @@ public class Immortal extends Thread {
 		pausar = true;
 	}
 
-	public void reaunudar(){
+	public synchronized void reaunudar(){
 		pausar = false;
-		synchronized (this) {
-			notify();
-		}
+		notify();
 	}
 
 }
