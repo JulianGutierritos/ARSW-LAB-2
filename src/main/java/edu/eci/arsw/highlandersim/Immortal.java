@@ -31,16 +31,16 @@ public class Immortal extends Thread {
 		this.pausar = false;
     }
 
-    public void run(){
+    public synchronized void run(){
 
         while (true) {
-			synchronized(this){
+			//synchronized(this){
 				while(pausar){
 					try{
 						wait();
 					} catch (Exception e) {} 
 				}
-			}
+			//}
             Immortal im;
 
             int myIndex = immortalsPopulation.indexOf(this);
