@@ -40,6 +40,8 @@ public class ControlFrame extends JFrame {
     private JScrollPane scrollPane;
     private JTextField numOfImmortals;
 
+    private Boolean pausa = false;
+
     /**
      * Launch the application.
      */
@@ -94,7 +96,8 @@ public class ControlFrame extends JFrame {
         btnPauseAndCheck.addActionListener(new ActionListener() {
         	@Override
             public void actionPerformed(ActionEvent e) {
-            	int sum=0;
+                int sum=0;
+                pausa=true;
             	synchronized(immortals) {
             		
             		
@@ -127,11 +130,14 @@ public class ControlFrame extends JFrame {
         btnResume.addActionListener(new ActionListener() {
         	@Override
             public void actionPerformed(ActionEvent e) {
-        		synchronized(immortals) {
-        			for (Immortal im : immortals) {
-    					im.reaunudar();
+                if(pausa){
+                    pausa=false;
+                    synchronized(immortals) {
+                        for (Immortal im : immortals) {
+                            im.reaunudar();
+                        }
                     }
-        		}
+                }
             }
         });
 

@@ -11,4 +11,4 @@
 *.zip
 *.tar.gz
 *.rar
-
+.settings/org.eclipse.jdt.core.prefs
