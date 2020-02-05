@@ -36,7 +36,7 @@ Después de los cambios realizados en el punto anterior, si se cumplela invarian
 
 ### 10. Analyzing the simulation operation scheme.
 
-- Cuando la vida de un inmortal llegaba a cero, otro inmortal ya no podia combatir contra el, pero el hilo continuaba ejecutandose gastanto mas recursos inecesariamente y permitiendo que los inmortales "muertos" siguieran combatiendo y bajando vida a otros. Al detener el Inmortal cuando moría, el programa se hacia más rapido a medida que morian mas inmortales y ya solo combaten los inmortales que se envientrasn "vivos".
+- Cuando la vida de un inmortal llegaba a cero, otro inmortal ya no podía combatir contra él, pero el hilo continuaba ejecutandose gastanto más recursos innecesariamente y permitiendo que los inmortales "muertos" siguieran combatiendo y bajando vida a otros. Al detener el Inmortal cuando moría, el programa se hacía más rapido a medida que morían más inmortales y ya solo combaten los inmortales que se encuentran "vivos".
 
 
 
