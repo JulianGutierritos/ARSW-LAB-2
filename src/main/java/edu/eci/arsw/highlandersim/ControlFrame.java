@@ -57,6 +57,29 @@ public class ControlFrame extends JFrame {
             }
         });
     }
+	
+	public void correrP(){
+		this.immortals = setupInmortals();
+		for (Immortal im : immortals) {
+			im.start();
+	    }
+		
+	}
+	
+	public void setInmortals(JTextField numOfImmortals){	
+		this.numOfImmortals = numOfImmortals;
+	}
+	
+	public int getPuntajeTotalYPausar (){
+		synchronized(immortals) {
+			for (Immortal im : immortals) {
+				im.pausar();
+			}
+		}
+		Sumas sumas= new Sumas(50,immortals,immortals.size());
+        sumas.sumaTotal();
+		return sumas.getSumaTotal();
+	}
 
     /**
      * Create the frame.
@@ -111,10 +134,9 @@ public class ControlFrame extends JFrame {
             			//}
             		}
             		
-            		Sumas sumas=new Sumas(50,immortals,1000);
+            		Sumas sumas=new Sumas(50,immortals,immortals.size());
             		sumas.sumaTotal();
-            		sum+=sumas.getSumaTotal();
-            		System.out.println("ya por acá");            		
+            		sum+=sumas.getSumaTotal();          		
     				immortals.notifyAll();
             	}
 				
@@ -179,7 +201,7 @@ public class ControlFrame extends JFrame {
         contentPane.add(statisticsLabel, BorderLayout.SOUTH);
 
     }
-
+	
     public List<Immortal> setupInmortals() {
 
         ImmortalUpdateReportCallback ucb=new TextAreaUpdateReportCallback(output,scrollPane);
