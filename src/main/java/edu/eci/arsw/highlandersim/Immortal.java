@@ -107,5 +107,6 @@ public class Immortal extends Thread {
 		pausar = false;
 		notify();
 	}
+	
 
 }

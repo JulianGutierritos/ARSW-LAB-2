@@ -27,7 +27,7 @@ public class InmortalTest{
         }
 		assertEquals(c.getPuntajeTotalYPausar(), 100*100);
     }
-	
+	/**
 	@Test
     public void deberianMantenerseLaCondicionCon1000(){
         ControlFrame c = new ControlFrame();
@@ -41,7 +41,6 @@ public class InmortalTest{
         }
 		assertEquals(c.getPuntajeTotalYPausar(), 1000*100);
     }
-	
 	@Test
     public void deberianMantenerseLaCondicionCon10000(){
         ControlFrame c = new ControlFrame();
@@ -55,4 +54,5 @@ public class InmortalTest{
         }
 		assertEquals(c.getPuntajeTotalYPausar(), 10000*100);
     }
+	*/
 }

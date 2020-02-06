@@ -41,6 +41,8 @@ public class ControlFrame extends JFrame {
     private JTextField numOfImmortals;
 
     private Boolean pausa = false;
+	
+	private Boolean stop = false;
 
     /**
      * Launch the application.
@@ -119,29 +121,31 @@ public class ControlFrame extends JFrame {
         btnPauseAndCheck.addActionListener(new ActionListener() {
         	@Override
             public void actionPerformed(ActionEvent e) {
-                int sum=0;
-                pausa=true;
-            	synchronized(immortals) {
-            		
-            		
-            		/*for(int i=0;i<Integer.parseInt(numOfImmortals.getText());i++) {
-            			
-            		}*/
-            		for (Immortal im : immortals) {
-            			//synchronized(im) {
-            				im.pausar();
-//            				sum+=im.getHealth().get();
-            			//}
-            		}
-            		
-            		Sumas sumas=new Sumas(50,immortals,immortals.size());
-            		sumas.sumaTotal();
-            		sum+=sumas.getSumaTotal();          		
-    				immortals.notifyAll();
-            	}
-				
-				
-                statisticsLabel.setText("<html>"+immortals.toString()+"<br>Health sum:"+ sum);
+				if ((!pausa)&&(!stop)){
+					int sum=0;
+					pausa=true;
+					synchronized(immortals) {
+						
+						
+						/*for(int i=0;i<Integer.parseInt(numOfImmortals.getText());i++) {
+							
+						}*/
+						for (Immortal im : immortals) {
+							//synchronized(im) {
+								im.pausar();
+	//            				sum+=im.getHealth().get();
+							//}
+						}
+						
+						Sumas sumas=new Sumas(50,immortals,immortals.size());
+						sumas.sumaTotal();
+						sum+=sumas.getSumaTotal();          		
+						immortals.notifyAll();
+					}
+					
+					
+					statisticsLabel.setText("<html>"+immortals.toString()+"<br>Health sum:"+ sum);
+				}
             }
         });
         toolBar.add(btnPauseAndCheck);
@@ -152,7 +156,7 @@ public class ControlFrame extends JFrame {
         btnResume.addActionListener(new ActionListener() {
         	@Override
             public void actionPerformed(ActionEvent e) {
-                if(pausa){
+                if((pausa)&&(!stop)){
                     pausa=false;
                     synchronized(immortals) {
                         for (Immortal im : immortals) {
@@ -169,7 +173,7 @@ public class ControlFrame extends JFrame {
         toolBar.add(lblNumOfImmortals);
 
         numOfImmortals = new JTextField();
-        numOfImmortals.setText("1000");
+        numOfImmortals.setText("100");
         toolBar.add(numOfImmortals);
         numOfImmortals.setColumns(10);
 
@@ -178,6 +182,7 @@ public class ControlFrame extends JFrame {
         btnStop.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				stop = true;
 				synchronized(immortals) {
 					for (Immortal im : immortals) {
 						im.pausar();
